@@ -1,0 +1,136 @@
+<!-- templates/home.html -->
+{% extends 'cars/base.html' %}
+{% block title %}Home{% endblock %}
+{% load extra_url %}
+
+
+{% block content %}
+    <button onclick="location.href = 'add/';" id="listcar" class="float-left submit-button" >list car</button>
+
+    <form action="." method="get">
+        <label for="make">Make</label>
+        <select name="make">
+            <option value="">Select Make</option>
+            {% for make in car_make_list %}
+                <option value="{{ make }}">{{ make }}</option>
+            {% endfor %}
+        </select>
+        <label for="year">Year</label>
+        <select name="year">
+            <option value="">Select Year</option>
+            {% for year in car_year_list %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+         </select>
+
+         <input type="submit" name="apply_filter" value="Filter" />
+         <a href="/">clear all</a>
+    </form>
+    {%if page_obj%}
+        <div class="cars">
+            {% for car in page_obj %}
+                {# Each "car" is a Car model object. #}
+                <table class="car-{{ car.id }}">
+                    <tr>
+                        <td>
+                            Seller Name:
+                        </td>
+                        <td name="seller_name">
+                            {{ car.seller_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Seller Contact Number:
+                        </td>
+                        <td name="seller_mob">
+                            {{ car.seller_mob }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Car Make
+                        </td>
+                        <td name="make">
+                            {{ car.make }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Car Model
+                        </td>
+                        <td name="model">
+                            {{ car.model }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Car Year
+                        </td>
+                        <td name="year">
+                            {{ car.year }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Car Price
+                        </td>
+                        <td name="price">
+                            {{ car.price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Car Condition
+                        </td>
+                        <td name="conditio">
+                            {{ car.condition }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if not car.is_sell %}
+                                <form action="{% url 'cars:buy' car.id %}" method="get">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Buy" id="{{ car.id }}"/>
+                                </form>
+                            {% else %}
+                                <label for="soldcar">Sold</label>
+                                {% if request.user.is_superuser %}
+                                    <form action="{% url 'cars:available' car.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Make available" id="{{ car.id }}"/>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+
+                        </td>
+                    </tr>
+
+                    <hr/>
+                </table>
+
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a name="first_page" href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; first</a> |
+                <a name="prev_page"href="{% my_url page_obj.previous_page_number 'page' request.GET.urlencode %}">previous</a> |
+                {% endif %}
+                <span class="current_page">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                | <a name="next_page" href="{% my_url page_obj.next_page_number 'page' request.GET.urlencode %}">next</a>
+                | <a name="last_page" href="{% my_url page_obj.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        </div>
+        <span class="result-not-found">No result found for your filter</span></div>
+
+    {% endif %}
+
+{% endblock %}

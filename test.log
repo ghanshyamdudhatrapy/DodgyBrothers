@@ -1,0 +1,56 @@
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 32B done
+#1 DONE 0.1s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3
+#3 DONE 0.0s
+
+#4 [ 1/12] FROM docker.io/library/python:3
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 38B done
+#5 DONE 0.0s
+
+#6 [10/12] RUN apt install -yqq unzip
+#6 CACHED
+
+#7 [ 5/12] RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+#7 CACHED
+
+#8 [ 6/12] RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+#8 CACHED
+
+#9 [ 4/12] RUN pip install -r requirements.txt
+#9 CACHED
+
+#10 [ 3/12] COPY requirements.txt ./
+#10 CACHED
+
+#11 [ 2/12] WORKDIR /usr/src/app
+#11 CACHED
+
+#12 [ 9/12] RUN which google-chrome
+#12 CACHED
+
+#13 [ 7/12] RUN apt -y update
+#13 CACHED
+
+#14 [ 8/12] RUN apt install -y google-chrome-stable
+#14 CACHED
+
+#15 [11/12] RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
+#15 CACHED
+
+#16 [12/12] RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 writing image sha256:ec9a5f9eb2dcf63c425efac610cba5d2de296da7582ca32323665422a502d4cb done
+#17 naming to docker.io/library/dodgybrothers_django done
+#17 DONE 0.1s

@@ -1,0 +1,20 @@
+[
+{
+    "model": "cars.user",
+    "pk": 1,
+    "fields":
+    {
+        "password": "pbkdf2_sha256$320000$eOqaFYk91MbsIt2hX4n4Fk$ZsmwL8I4wYzjPePNRgaJG/Zw3ZSMgT8q1DVCTKJzks0=",
+        "last_login": "2022-05-15T13:04:54.420Z",
+        "is_superuser": true,
+        "username": "mike@example.org",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-05-15T13:04:41.131Z",
+        "email": "mike@example.org",
+        "groups": [],
+        "user_permissions": []
+    }
+}]

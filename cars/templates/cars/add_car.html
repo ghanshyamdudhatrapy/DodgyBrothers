@@ -1,0 +1,23 @@
+{% extends 'cars/base.html' %}
+
+{% block title %}Add Car{% endblock %}
+{% block content %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li  {% if message.tags %} class="{{ message.tags }}" {% endif %}> {{ message }} </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<form method="POST" enctype="multipart/form-data">
+
+    <!-- Security token -->
+    {% csrf_token %}
+
+    <!-- Using the formset -->
+    {{ form.as_p }}
+
+    <input type="submit" name="listcar_submit" value="Submit">
+
+</form>
+{% endblock %}
